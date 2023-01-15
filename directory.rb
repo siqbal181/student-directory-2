@@ -22,11 +22,18 @@ def print_header
 end
 
 #Pass hash through of name and cohort
+=begin
 def print(students)
   students.each_with_index do |student, index|
     puts "#{index + 1} #{student[:name]} (#{student[:cohort]} cohort)"
   end
+end 
+=end
+
+def print(students)
+    students.each {|x| puts x if x[:name].start_with? 'A'}
 end
+
 
 def print_footer(names)
   puts "Overall, we have #{names.count} great students"
@@ -41,3 +48,6 @@ print_footer(students)
 
 # 1) Modify the program to print a number before each name of student. 
 # EG: 1. Dr. Hannibal Lecter (hint: each_with_index())
+
+# 2) Modify your program to only print students whos name begins
+# with a specific letter
