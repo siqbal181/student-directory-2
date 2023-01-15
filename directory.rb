@@ -23,8 +23,8 @@ end
 
 #Pass hash through of name and cohort
 def print(students)
-  students.each do |student|
-    puts "#{student[:name]} (#{student[:cohort]} cohort)"
+  students.each_with_index do |student, index|
+    puts "#{index + 1} #{student[:name]} (#{student[:cohort]} cohort)"
   end
 end
 
@@ -36,3 +36,8 @@ students = input_students
 print_header
 print(students)
 print_footer(students)
+
+# Exercises
+
+# 1) Modify the program to print a number before each name of student. 
+# EG: 1. Dr. Hannibal Lecter (hint: each_with_index())
