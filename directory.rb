@@ -48,3 +48,10 @@ print_footer(students)
 #def print(students)
 #    students.each {|x| puts x if x[:name].start_with? 'A'}
 #end
+
+# 3) Modify your program to only print the students whose
+# name is shorter than 12 characters.
+
+#def print(students)
+#    students.each {|x| puts x if x[:name].length < 12}
+#end
