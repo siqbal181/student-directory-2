@@ -22,16 +22,10 @@ def print_header
 end
 
 #Pass hash through of name and cohort
-=begin
 def print(students)
-  students.each_with_index do |student, index|
-    puts "#{index + 1} #{student[:name]} (#{student[:cohort]} cohort)"
-  end
-end 
-=end
-
-def print(students)
-    students.each {|x| puts x if x[:name].start_with? 'A'}
+    students.each do |student|
+      puts "#{student[:name]} (#{student[:cohort]} cohort)"
+    end
 end
 
 
@@ -51,3 +45,6 @@ print_footer(students)
 
 # 2) Modify your program to only print students whos name begins
 # with a specific letter
+#def print(students)
+#    students.each {|x| puts x if x[:name].start_with? 'A'}
+#end
