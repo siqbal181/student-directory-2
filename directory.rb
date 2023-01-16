@@ -24,7 +24,7 @@ end
 #Pass hash through of name and cohort
 def print(students)
     students.each do |student|
-      puts "#{student[:name]} (#{student[:cohort]} cohort)"
+     puts "#{student[:name]} (#{student[:cohort]} cohort)"
     end
 end
 
@@ -54,4 +54,21 @@ print_footer(students)
 
 #def print(students)
 #    students.each {|x| puts x if x[:name].length < 12}
-#end
+#
+
+# 4) Rewrite the each() method that prints all students using 
+# while or until control flow methods.
+
+=begins
+def print_while(students)
+  # iteration around the students array
+  puts "Displaying students using a WHILE"
+  index = 0
+  while index < students.count do
+    puts "#{index+1}. #{students[:name]} (#{students[:cohort]} cohort)"
+    index += 1
+  end
+  puts
+end
+=end
+
