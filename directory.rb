@@ -11,18 +11,26 @@ def input_students
     if cohort.empty?
       cohort = "Undefined"
     end
+    # need to lowercase cohort and cohort_months to be able to see if the cohort input matches the months and no typos
     downcase_cohorts = cohort_months.map {|x| x.downcase}
     cohort_input_downcase = cohort.downcase
     unless downcase_cohorts.include?(cohort_input_downcase)
       puts "Please check your cohort value and enter a full month (EG: November)"
       cohort = gets.chomp
     end
-      puts "Please enter what country you are from: "
+    # ask what country and favourite hobby
+    puts "Please enter what country you are from: "
     country = gets.chomp
     puts "What is your most favourite hobby?"
     hobby = gets.chomp
+    # push the inputs to the students array using << and symbols name: name,
     students << {name: name, cohort: cohort, country: country, hobby: hobby}
-    puts "Now we have #{students.count} students"
+    # if statement to print student singular when just 1 student, plural when >1 
+    if students.count == 1 
+      puts "Now we have #{students.count} student"
+    else
+      puts "Now we have #{students.count} students"
+    end
     puts "Enter another name (or hit enter when you're done): "
     #puts "name",name
     name= gets.chomp
@@ -96,11 +104,21 @@ print_footer(students)
 #and cohort.
 # What if one of the values is empty? (Can you supply a default value?)
 # Input is a string, how to convert to a symbol
-# What if the user makes a typo?
+# What if the user makes a typo? - DONE
 
-# 8
-# In the input_students method the cohort value is hard-coded.
-# How can you ask for both the name and the cohort? DONE
-# What if one of the values is empty? Can you supply a default value? DONE
-# The input will be given to you as a string? How will you convert it to a symbol? to_sym
-# What if the user makes a typo? DONE!
+# 8)
+# Once you complete the previous exercise, change the way the users 
+# are displayed: print them grouped by cohorts. To do this, you'll 
+# need to get a list of all existing cohorts (the map() method may 
+# be useful but it's not the only option), iterate over it and only 
+# print the students from that cohort.
+
+# 9) Right now if we have only one student, the user will see a 
+# message "Now we have 1 students", whereas it should be "Now we have 
+# 1 student". How can you fix it so that it used singular form when 
+# appropriate and plural form otherwise? - DONE
+
+# 10) Alternative to chomp() 
+
+# 11) Input file and error check
+# Done - file is ruby_fix.rb
