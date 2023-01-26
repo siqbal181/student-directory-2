@@ -1,3 +1,29 @@
+def interactive_menu
+  students = []
+  loop do
+    # 1. print the menu and ask the user what to do
+    puts "1. Input the students"
+    puts "2. Show the students"
+    puts "9. Exit" 
+    # 2. read the input and save it into a variable
+    selection = gets.chomp
+    # 3. do what the user has asked
+    case selection
+     when "1"
+      students = input_students
+     when "2"
+      print_header
+      print(students)
+      print_footer(students)
+     when "9"
+      exit # cause the programme to terminate
+     else
+      puts "Please try select again"
+     end
+  end
+end
+
+
 def input_students
   cohort_months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
     puts "Please enter the names of the students"
@@ -52,7 +78,7 @@ def print(students)
   grouped_students = students.group_by{|student| student[:cohort]}
   # use above variable to loop through the cohort element of the grouped_students
   grouped_students.each do |cohort, students|
-    puts "student in the #{cohort} cohort:"
+    puts "Students in the #{cohort} cohort:"
     # inner loop loops through the student element of the grouped students 
     students.each do |student|
       puts student[:name]
@@ -66,16 +92,17 @@ def print_footer(names)
   puts "Overall, we have #{names.count} great students"
 end
 
-#nothing happens until we call the methods
-students = input_students
+print interactive_menu
+
+# students = input_students
 # If there are not any students, print no users inputted, otherwise continue printing
-if students.count == 0
-  puts "No users inputted"
-else
-  print_header
-  print(students)
-  print_footer(students)
-end
+# if students.count == 0
+ # puts "No users inputted"
+#else
+#  print_header
+#  print(students)
+#  print_footer(students)
+#end
 
 # Exercises
 
