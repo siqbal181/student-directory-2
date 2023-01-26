@@ -45,23 +45,37 @@ def print_header
   puts "-------------".center(20)
 end
 
-#Pass hash through of name and cohort
+# Pass hash through name and cohort - but group by cohort (exercise 8)
 def print(students)
-  students.each_with_index do |student, index|
-   puts "#{(index +1)}. #{student[:name]}, #{student[:country]} (#{student[:cohort]} cohort) favourite hobby is #{student[:hobby]}"
+  # We pass students parameter which takes the input_students
+  # grouped_students variable lets us get cohort value first
+  grouped_students = students.group_by{|student| student[:cohort]}
+  # use above variable to loop through the cohort element of the grouped_students
+  grouped_students.each do |cohort, students|
+    puts "student in the #{cohort} cohort:"
+    # inner loop loops through the student element of the grouped students 
+    students.each do |student|
+      puts student[:name]
+    end
   end
 end
 
 
-
+# Print footer
 def print_footer(names)
   puts "Overall, we have #{names.count} great students"
 end
+
 #nothing happens until we call the methods
 students = input_students
-print_header
-print(students)
-print_footer(students)
+# If there are not any students, print no users inputted, otherwise continue printing
+if students.count == 0
+  puts "No users inputted"
+else
+  print_header
+  print(students)
+  print_footer(students)
+end
 
 # Exercises
 
@@ -122,3 +136,6 @@ print_footer(students)
 
 # 11) Input file and error check
 # Done - file is ruby_fix.rb
+
+# 12) If a user doesn't enter students - it will print empty list
+# Use if statement to print list if there was one student at least there
