@@ -1,34 +1,9 @@
-def interactive_menu
-  students = []
-  loop do
-    # 1. print the menu and ask the user what to do
-    puts "1. Input the students"
-    puts "2. Show the students"
-    puts "9. Exit" 
-    # 2. read the input and save it into a variable
-    selection = gets.chomp
-    # 3. do what the user has asked
-    case selection
-     when "1"
-      students = input_students
-     when "2"
-      print_header
-      print(students)
-      print_footer(students)
-     when "9"
-      exit # cause the programme to terminate
-     else
-      puts "Please try select again"
-     end
-  end
-end
-
+@students = [] # an empty array accessible to all methods
 
 def input_students
   cohort_months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
     puts "Please enter the names of the students"
     puts "To finish, just hit the return twice"
-    students =[]     # create an empty array
     name = gets.chomp
   while !name.empty? do # while name is NOT empty, repeat this code
     puts "What cohort month are you in?"
@@ -50,49 +25,71 @@ def input_students
     puts "What is your most favourite hobby?"
     hobby = gets.chomp
     # push the inputs to the students array using << and symbols name: name,
-    students << {name: name, cohort: cohort, country: country, hobby: hobby}
+    @students << {name: name, cohort: cohort, country: country, hobby: hobby}
     # if statement to print student singular when just 1 student, plural when >1 
-    if students.count == 1 
-      puts "Now we have #{students.count} student"
-    else
-      puts "Now we have #{students.count} students"
-    end
+    puts @students.count == 1 ? "Now we have #{@students.count} student" : "Now we have #{@students.count} students"
     puts "Enter another name (or hit enter when you're done): "
     #puts "name",name
     name= gets.chomp
   end
-  # return the array of students
-  students
 end
 
+def interactive_menu
+  loop do
+    print_menu
+    process(gets.chomp)
+  end
+end
+
+# Refactor the interactive menu
+# Extract the print menu code on its own method
+
+def print_menu
+  puts "1. Input the students"
+  puts "2. Show the students"
+  puts "9. Exit"
+end
+
+# Extract the code that prints the students into a method
+def show_students
+  print_header
+  print_student_list
+  # We had this before as print(students) but as student is global vairable, we don't need to call as a parameter
+  # instead of just leaving it as print, we can rename it to print_students_list
+  print_footer
+end
+
+# Extract the case selection into new method
+def process(selection)
+  case selection
+    when "1"
+      input_students
+    when "2"
+      show_students
+    when "9"
+      exit
+    else
+      puts "I don't know what you mean, try again"
+  end
+end
 
 def print_header
   puts "The students of Villains Academy".center(20)
   puts "-------------".center(20)
 end
 
-# Pass hash through name and cohort - but group by cohort (exercise 8)
-def print(students)
-  # We pass students parameter which takes the input_students
-  # grouped_students variable lets us get cohort value first
-  grouped_students = students.group_by{|student| student[:cohort]}
-  # use above variable to loop through the cohort element of the grouped_students
-  grouped_students.each do |cohort, students|
-    puts "Students in the #{cohort} cohort:"
-    # inner loop loops through the student element of the grouped students 
-    students.each do |student|
-      puts student[:name]
-    end
+def print_student_list
+  @students.each do |student|
+    puts "#{student[:name]} (#{student[:cohort]} cohort)"
   end
 end
 
-
 # Print footer
-def print_footer(names)
-  puts "Overall, we have #{names.count} great students"
+def print_footer
+  puts "Overall, we have #{@students.count} great students"
 end
 
-print interactive_menu
+interactive_menu
 
 # students = input_students
 # If there are not any students, print no users inputted, otherwise continue printing
@@ -153,6 +150,22 @@ print interactive_menu
 # need to get a list of all existing cohorts (the map() method may 
 # be useful but it's not the only option), iterate over it and only 
 # print the students from that cohort.
+
+
+# Pass hash through name and cohort - but group by cohort (exercise 8)
+#def print(students))
+  # We pass students parameter which takes the input_students
+  # grouped_students variable lets us get cohort value first
+#  grouped_students = students.group_by{|student| student[:cohort]}
+  # use above variable to loop through the cohort element of the grouped_students
+ # grouped_students.each do |cohort, students|
+  #  puts "Students in the #{cohort} cohort:"
+    # inner loop loops through the student element of the grouped students 
+   # students.each do |student|
+    #  puts student[:name]
+   # end
+  #end
+#end
 
 # 9) Right now if we have only one student, the user will see a 
 # message "Now we have 1 students", whereas it should be "Now we have 
