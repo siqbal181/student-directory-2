@@ -4,10 +4,10 @@ def input_students
   cohort_months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
     puts "Please enter the names of the students"
     puts "To finish, just hit the return twice"
-    name = gets.chomp
+    name = STDIN.gets.chomp
   while !name.empty? do # while name is NOT empty, repeat this code
     puts "What cohort month are you in?"
-    cohort = gets.chomp
+    cohort = STDIN.gets.chomp
     # if cohort is empty, return undefined
     if cohort.empty?
       cohort = "Undefined"
@@ -17,27 +17,27 @@ def input_students
     cohort_input_downcase = cohort.downcase
     unless downcase_cohorts.include?(cohort_input_downcase)
       puts "Please check your cohort value and enter a full month (EG: November)"
-      cohort = gets.chomp
+      cohort = STDIN.gets.chomp
     end
     # ask what country and favourite hobby
     puts "Please enter what country you are from: "
-    country = gets.chomp
+    country = STDIN.gets.chomp
     puts "What is your most favourite hobby?"
-    hobby = gets.chomp
+    hobby = STDIN.gets.chomp
     # push the inputs to the students array using << and symbols name: name,
     @students << {name: name, cohort: cohort, country: country, hobby: hobby}
     # if statement to print student singular when just 1 student, plural when >1 
     puts @students.count == 1 ? "Now we have #{@students.count} student" : "Now we have #{@students.count} students"
     puts "Enter another name (or hit enter when you're done): "
     #puts "name",name
-    name= gets.chomp
+    name= STDIN.gets.chomp
   end
 end
 
 def interactive_menu
   loop do
     print_menu
-    process(gets.chomp)
+    process(STDIN.gets.chomp)
   end
 end
 
@@ -77,7 +77,7 @@ def save_students
 end
 
   # Load the students from the csv file
-  def load_students
+  def load_students(filename = "students.csv")
     # open in "r" read format as we just want to read from file
     file = File.open("students.csv", "r")
     # iterate over each of the lines and split it at the comma which gives us two variables
@@ -89,6 +89,19 @@ end
       @students << {name: name, cohort: cohort.to_sym}
     end
     file.close
+  end
+
+  # Take arguments from command line using ARGV
+  def try_load_students
+    filename = ARGV.first # first argument from command line
+    return if filename.nil? # get out of method if filename isn't given
+    if File.exists?(filename) # if it exists
+      load_students(filename)
+      puts "Loaded #{@students.count} from #{filename}"
+    else # if it doesn't exist
+      puts "Sorry #{filename} doesn't exist."
+      exit # quit the program
+    end
   end
 
 # Extract the case selection into new method
