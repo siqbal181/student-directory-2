@@ -8,29 +8,20 @@ def input_students
   while !name.empty? do # while name is NOT empty, repeat this code
     puts "What cohort month are you in?"
     cohort = STDIN.gets.chomp
-    # if cohort is empty, return undefined
-    if cohort.empty?
-      cohort = "Undefined"
-    end
+    cohort = "Undefined" if cohort.empty?
     # need to lowercase cohort and cohort_months to be able to see if the cohort input matches the months and no typos
-    downcase_cohorts = cohort_months.map {|x| x.downcase}
-    cohort_input_downcase = cohort.downcase
-    unless downcase_cohorts.include?(cohort_input_downcase)
+    unless cohort_months.map(&:downcase).include?(cohort.downcase)
       puts "Please check your cohort value and enter a full month (EG: November)"
       cohort = STDIN.gets.chomp
     end
-    # ask what country and favourite hobby
     puts "Please enter what country you are from: "
     country = STDIN.gets.chomp
     puts "What is your most favourite hobby?"
     hobby = STDIN.gets.chomp
-    # push the inputs to the students array using << and symbols name: name,
     @students << {name: name, cohort: cohort, country: country, hobby: hobby}
-    # if statement to print student singular when just 1 student, plural when >1 
     puts @students.count == 1 ? "Now we have #{@students.count} student" : "Now we have #{@students.count} students"
     puts "Enter another name (or hit enter when you're done): "
-    #puts "name",name
-    name= STDIN.gets.chomp
+    name = STDIN.gets.chomp
   end
 end
 
@@ -40,9 +31,6 @@ def interactive_menu
     process(STDIN.gets.chomp)
   end
 end
-
-# Refactor the interactive menu
-# Extract the print menu code on its own method
 
 def print_menu
   puts "1. Input the students"
@@ -138,6 +126,7 @@ def print_footer
   puts "Overall, we have #{@students.count} great students"
 end
 
+try_load_students
 interactive_menu
 
 # students = input_students
