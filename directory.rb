@@ -48,6 +48,7 @@ def print_menu
   puts "1. Input the students"
   puts "2. Show the students"
   puts "3. Save the list to students.csv"
+  puts "4. Load the list from students.csv"
   puts "9. Exit"
 end
 
@@ -60,6 +61,7 @@ def show_students
   print_footer
 end
 
+# Save the students to a csv file
 def save_students
   # open file for writing
   file = File.open("students.csv", "w")
@@ -74,6 +76,20 @@ def save_students
   file.close
 end
 
+  # Load the students from the csv file
+  def load_students
+    # open in "r" read format as we just want to read from file
+    file = File.open("students.csv", "r")
+    # iterate over each of the lines and split it at the comma which gives us two variables
+    # one variable is cohort and one is name (parallel assignment)
+    file.readlines.each do |line|
+      name, cohort = line.chomp.split(',')
+      # create a new hash and put it to students
+      # we made cohort back to symbol as this is how it was created, so shouldn't change the format
+      @students << {name: name, cohort: cohort.to_sym}
+    end
+    file.close
+  end
 
 # Extract the case selection into new method
 def process(selection)
@@ -84,6 +100,8 @@ def process(selection)
       show_students
     when "3"
       save_students
+    when "4"
+      load_students
     when "9"
       exit
     else
