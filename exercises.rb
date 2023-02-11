@@ -32,6 +32,10 @@ def process(selection)
   end
 end
 
+def add_student(name, cohort)
+  @students << {name: name, cohort: cohort}
+end
+
 def input_students
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
@@ -40,7 +44,8 @@ def input_students
   # while the name is not empty, repeat this code
   while !name.empty? do
     # add the student hash to the array
-    @students << {name: name, cohort: :november}
+    #@students << {name: name, cohort: :november}
+    add_student(name, :november)
     puts "Now we have #{@students.count} students"
     # get another name from the user
     name = STDIN.gets.chomp
@@ -80,13 +85,31 @@ def save_students
   file.close
 end
 
-def load_students(filename = "students.csv")
-  file = File.open(filename, "r")
-  file.readlines.each do |line|
-  name, cohort = line.chomp.split(',')
-    @students << {name: name, cohort: cohort.to_sym}
+def load_students
+  puts "Enter your filename (or press enter to use the default students.csv)"
+  provided_filename = STDIN.gets.chomp
+  if !provided_filename.empty?
+    filename = provided_filename
+  else 
+    filename = "students.csv"
   end
-  file.close
+  puts filename
+  if @students.empty?
+    file = File.open(filename, "r")
+    file.readlines.each do |line|
+       name, cohort = line.chomp.split(',')
+      #  @students << {name: name, cohort: cohort.to_sym}
+      add_student(name, cohort.to_sym)
+    end
+    file.close
+    puts "I've had to load the file"
+    puts @students
+  else
+    puts "I've not had to load the file"
+    puts @students
+    return
+  end
+    # add_student(name, cohort)
 end
 
 def try_load_students
