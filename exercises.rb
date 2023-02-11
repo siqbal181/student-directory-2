@@ -82,6 +82,7 @@ def save_students
     csv_line = student_data.join(",")
     file.puts csv_line
   end
+  puts "Students have been saved to students.csv"
   file.close
 end
 
@@ -93,7 +94,7 @@ def load_students
   else 
     filename = "students.csv"
   end
-  puts filename
+  #puts filename
   if @students.empty?
     file = File.open(filename, "r")
     file.readlines.each do |line|
@@ -102,10 +103,10 @@ def load_students
       add_student(name, cohort.to_sym)
     end
     file.close
-    puts "I've had to load the file"
+    puts "Loaded up #{filename}"
     puts @students
   else
-    puts "I've not had to load the file"
+    puts "Loaded up students.csv"
     puts @students
     return
   end
