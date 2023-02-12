@@ -3,8 +3,8 @@
 def print_menu
   puts "1. Input the students"
   puts "2. Show the students"
-  puts "3. Save the list to students.csv"
-  puts "4. Load the list from students.csv"
+  puts "3. Save the list to a csv file"
+  puts "4. Load the list from a csv file"
   puts "9. Exit" # 9 because we'll be adding more items
 end
 
@@ -74,16 +74,26 @@ def print_footer
 end
 
 def save_students
-  # open the file for writing
-  file = File.open("students.csv", "w")
+  # Ask the user which file they would like to use to save the students?
+  puts "Please enter an existing filename which you would like to save the students to: "
+  file_request = STDIN.gets.chomp 
+  # Loop to check if file exists on the directory, if not, ask the user for a different existing file.
+  file_exists = File.exists?(file_request)
+  if file_exists == true
+    file_open = File.open(file_request, "w")
+  else
+    puts "This file doesn't exist, please enter a file which already exists."
+    file_request
+    file_open
+  end
   # iterate over the array of students
   @students.each do |student|
     student_data = [student[:name], student[:cohort]]
     csv_line = student_data.join(",")
-    file.puts csv_line
+    file_open.puts csv_line
   end
-  puts "Students have been saved to students.csv"
-  file.close
+  puts "Students have been saved to #{file_request}"
+  file_open.close
 end
 
 def load_students
@@ -104,7 +114,7 @@ def load_students
     puts "Loaded up #{filename}"
     puts @students
   else
-    puts "Loaded up students.csv"
+    puts "Loaded up #{filename}"
     puts @students
     return
   end
