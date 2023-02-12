@@ -94,12 +94,10 @@ def load_students
   else 
     filename = "students.csv"
   end
-  #puts filename
   if @students.empty?
     file = File.open(filename, "r")
     file.readlines.each do |line|
        name, cohort = line.chomp.split(',')
-      #  @students << {name: name, cohort: cohort.to_sym}
       add_student(name, cohort.to_sym)
     end
     file.close
@@ -110,7 +108,6 @@ def load_students
     puts @students
     return
   end
-    # add_student(name, cohort)
 end
 
 def try_load_students
