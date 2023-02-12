@@ -78,14 +78,11 @@ def save_students
   puts "Please enter an existing filename which you would like to save the students to: "
   file_request = STDIN.gets.chomp 
   # Loop to check if file exists on the directory, if not, ask the user for a different existing file.
-  file_exists = File.exists?(file_request)
-  if file_exists == true
-    file_open = File.open(file_request, "w")
-  else
+  if !File.exists?(file_request)
     puts "This file doesn't exist, please enter a file which already exists."
-    file_request
-    file_open
+    file_request = STDIN.gets.chomp
   end
+    file_open = File.open(file_request, "w")
   # iterate over the array of students
   @students.each do |student|
     student_data = [student[:name], student[:cohort]]
